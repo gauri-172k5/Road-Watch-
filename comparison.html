@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ROADWATCH - Before & After Repair Quality Verification</title>
+  
+  <!-- FontAwesome & Fonts -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/dashboard.css">
+  <link rel="stylesheet" href="css/forms.css">
+  <link rel="stylesheet" href="css/responsive.css">
+</head>
+<body>
+
+  <div class="app-container">
+    <!-- Sidebar Navigation -->
+    <aside class="app-sidebar"></aside>
+
+    <!-- Main Content Shell -->
+    <main class="app-main">
+      <!-- Topbar Header -->
+      <header class="app-topbar">
+        <div class="topbar-left">
+          <button class="menu-toggle-btn" title="Toggle Navigation Menu">
+            <i class="fa-solid fa-bars"></i>
+          </button>
+          <div class="page-title-group">
+            <h1>Before & After Repair Quality Verification</h1>
+            <div class="page-breadcrumb">
+              <a href="dashboard.html">Dashboard</a>
+              <i class="fa-solid fa-chevron-right" style="font-size:0.65rem;"></i>
+              <span>Engineering Audit & Photographic Inspection</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="topbar-right">
+          <div class="live-clock-badge">
+            <div class="live-pulse"></div>
+            <span id="liveClockText">Live Telemetry</span>
+          </div>
+          <a href="notifications.html" class="topbar-action-btn" title="Notifications">
+            <i class="fa-solid fa-bell"></i>
+            <span class="notif-badge-bubble" id="topbarNotifBadge" style="display:none;">0</span>
+          </a>
+          <a href="maintenance.html" class="btn btn-outline btn-sm">
+            <i class="fa-solid fa-road-barrier"></i> Maintenance List
+          </a>
+        </div>
+      </header>
+
+      <!-- Comparison Page Content -->
+      <div class="page-content" style="max-width: 1100px; margin: 0 auto;">
+
+        <!-- Selector Card -->
+        <div class="rw-card" style="margin-bottom: 1.5rem;">
+          <div class="card-body" style="padding: 1.25rem 1.75rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;">
+            <div>
+              <label class="form-label" style="font-size: 0.85rem; margin-bottom: 0.25rem;" for="comparisonTaskSelector">
+                <i class="fa-solid fa-list-check" style="color: var(--accent-blue);"></i> Select Maintenance Task for Quality Inspection:
+              </label>
+              <select id="comparisonTaskSelector" class="form-select" style="min-width: 380px; font-weight: 600;">
+                <!-- Populated by js/comparison.js -->
+              </select>
+            </div>
+
+            <!-- Verified Stamp Badge (shows when task is Completed) -->
+            <div id="verifiedStampBadge" style="display: none; align-items: center; gap: 0.5rem; background: #ecfdf5; border: 2px solid var(--emerald-green); padding: 0.5rem 1rem; border-radius: 8px; color: var(--emerald-green-dark); font-weight: 800; text-transform: uppercase; letter-spacing: 0.05em; font-size: 0.85rem;">
+              <i class="fa-solid fa-stamp" style="font-size: 1.25rem;"></i>
+              <span>Officially Verified & Completed</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Before & After Comparison Grid -->
+        <div class="comparison-container">
+          
+          <!-- BEFORE REPAIR SECTION -->
+          <div class="comparison-box">
+            <div class="comparison-tag tag-before">
+              <i class="fa-solid fa-triangle-exclamation"></i> BEFORE REPAIR (Reported Damage)
+            </div>
+            
+            <div class="comparison-img-wrapper">
+              <img id="beforeImage" src="assets/images/pothole.svg" alt="Damaged Road State">
+            </div>
+
+            <div class="comparison-meta-box">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.75rem;">
+                <div>
+                  <span style="font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase; font-weight: 700;">Complaint ID:</span>
+                  <div id="beforeComplaintId" style="font-weight: 800; color: var(--primary-navy); font-size: 1.05rem;"></div>
+                </div>
+                <div id="beforeSeverityBadge"></div>
+              </div>
+
+              <div style="font-size: 0.875rem; margin-bottom: 0.5rem;">
+                <span style="color: var(--text-muted);">Damage Category:</span>
+                <strong id="beforeDamageType" style="color: var(--primary-navy); margin-left: 4px;"></strong>
+              </div>
+
+              <div style="font-size: 0.875rem; margin-bottom: 0.75rem;">
+                <span style="color: var(--text-muted);">Reported Date:</span>
+                <span id="beforeReportedDate" style="color: var(--primary-navy); margin-left: 4px;"></span>
+              </div>
+
+              <div style="font-size: 0.85rem; color: var(--text-muted); line-height: 1.4; background: #f8fafc; padding: 0.75rem; border-radius: 6px;" id="beforeDescription">
+              </div>
+            </div>
+          </div>
+
+          <!-- AFTER REPAIR SECTION -->
+          <div class="comparison-box">
+            <div class="comparison-tag tag-after">
+              <i class="fa-solid fa-circle-check"></i> AFTER REPAIR (Restored Road)
+            </div>
+
+            <div class="comparison-img-wrapper" id="afterPhotoContainer">
+              <!-- If image is uploaded/exists -->
+              <img id="afterImage" src="" alt="Repaired Road State" style="display: none;">
+
+              <!-- If image not yet uploaded -->
+              <div class="comparison-empty-after" id="afterEmptyState">
+                <i class="fa-solid fa-camera"></i>
+                <div style="font-weight: 700; color: #ffffff; margin-bottom: 0.25rem;">No After-Repair Photo Yet</div>
+                <p style="font-size: 0.8rem; color: #94a3b8; max-width: 240px;">
+                  Upload the field crew restoration photo below to initiate verification.
+                </p>
+              </div>
+            </div>
+
+            <div class="comparison-meta-box">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.75rem;">
+                <div>
+                  <span style="font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase; font-weight: 700;">Restoration Crew:</span>
+                  <div id="afterWorkerDetail" style="font-weight: 800; color: var(--accent-blue); font-size: 1.05rem;"></div>
+                </div>
+                <div>
+                  <span style="font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase; font-weight: 700;">Completed:</span>
+                  <div id="afterCompletedDate" style="font-weight: 600; color: var(--primary-navy); font-size: 0.9rem;"></div>
+                </div>
+              </div>
+
+              <div style="font-size: 0.85rem; color: var(--text-muted); line-height: 1.4; background: #f8fafc; padding: 0.75rem; border-radius: 6px; margin-bottom: 1rem;" id="afterRepairNotes">
+              </div>
+
+              <!-- Upload Field for After Photo -->
+              <div style="border-top: 1px solid #f1f5f9; padding-top: 1rem;">
+                <label class="form-label" style="font-size: 0.8rem;" for="afterPhotoInput">
+                  <i class="fa-solid fa-upload"></i> Upload Repaired Road Photograph:
+                </label>
+                <input type="file" id="afterPhotoInput" class="form-control" accept="image/*" style="font-size: 0.8rem;">
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Official Municipal Verification Action Box -->
+        <div id="verificationControlPanel" class="rw-card" style="margin-top: 2rem; border: 2px solid var(--emerald-green); background: linear-gradient(135deg, #f0fdf4, #ecfdf5);">
+          <div class="card-body" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1.5rem; padding: 1.75rem;">
+            <div>
+              <h3 style="font-size: 1.15rem; color: var(--emerald-green-dark); font-weight: 800; display: flex; align-items: center; gap: 0.5rem;">
+                <i class="fa-solid fa-shield-check"></i> Quality Audit & Formal Sign-off
+              </h3>
+              <p style="font-size: 0.85rem; color: #065f46; margin-top: 0.25rem; max-width: 620px;">
+                Review the side-by-side photographic evidence above. When satisfied that surface compaction and alignment conform to municipal standards, click <strong>Verify & Complete Repair</strong>. Only after this verification will the maintenance task and citizen complaint be marked as Completed.
+              </p>
+            </div>
+            <div>
+              <button class="btn btn-success" id="btnVerifyRepair" style="padding: 0.75rem 1.75rem; font-size: 0.95rem; font-weight: 700;">
+                <i class="fa-solid fa-stamp"></i> Verify & Complete Repair
+              </button>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </main>
+  </div>
+
+  <!-- Scripts -->
+  <script src="js/storage.js"></script>
+  <script src="js/main.js"></script>
+  <script src="js/comparison.js"></script>
+</body>
+</html>

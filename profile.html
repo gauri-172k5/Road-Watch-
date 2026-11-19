@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ROADWATCH - Officer Profile & System Settings</title>
+  
+  <!-- FontAwesome & Fonts -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/dashboard.css">
+  <link rel="stylesheet" href="css/forms.css">
+  <link rel="stylesheet" href="css/responsive.css">
+</head>
+<body>
+
+  <div class="app-container">
+    <!-- Sidebar Navigation -->
+    <aside class="app-sidebar"></aside>
+
+    <!-- Main Content Shell -->
+    <main class="app-main">
+      <!-- Topbar Header -->
+      <header class="app-topbar">
+        <div class="topbar-left">
+          <button class="menu-toggle-btn" title="Toggle Navigation Menu">
+            <i class="fa-solid fa-bars"></i>
+          </button>
+          <div class="page-title-group">
+            <h1>Officer Profile & Administration Settings</h1>
+            <div class="page-breadcrumb">
+              <a href="dashboard.html">Dashboard</a>
+              <i class="fa-solid fa-chevron-right" style="font-size:0.65rem;"></i>
+              <span>User Profile & Credentials</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="topbar-right">
+          <div class="live-clock-badge">
+            <div class="live-pulse"></div>
+            <span id="liveClockText">Live Telemetry</span>
+          </div>
+          <a href="notifications.html" class="topbar-action-btn" title="Notifications">
+            <i class="fa-solid fa-bell"></i>
+            <span class="notif-badge-bubble" id="topbarNotifBadge" style="display:none;">0</span>
+          </a>
+        </div>
+      </header>
+
+      <!-- Profile Page Content -->
+      <div class="page-content" style="max-width: 960px; margin: 0 auto;">
+        
+        <!-- Profile Overview Card -->
+        <div class="rw-card" style="margin-bottom: 2rem;">
+          <div class="card-body" style="padding: 2rem; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1.5rem;">
+            <div style="display: flex; align-items: center; gap: 1.5rem;">
+              <div style="position: relative;">
+                <img id="profileAvatarDisplay" src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=200&q=80" alt="Officer Avatar" style="width: 88px; height: 88px; border-radius: 50%; object-fit: cover; border: 3px solid var(--accent-blue); box-shadow: var(--shadow-md);">
+                <button type="button" onclick="document.getElementById('avatarFileInput').click()" style="position: absolute; bottom: 0; right: 0; background: var(--accent-blue); color: #fff; width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.75rem; box-shadow: var(--shadow-sm); cursor: pointer;" title="Change Profile Picture">
+                  <i class="fa-solid fa-camera"></i>
+                </button>
+                <input type="file" id="avatarFileInput" accept="image/*" style="display: none;">
+              </div>
+
+              <div>
+                <div style="display: flex; align-items: center; gap: 0.75rem;">
+                  <h2 id="profileNameDisplay" style="font-size: 1.4rem; color: var(--primary-navy); font-weight: 800; margin-bottom: 2px;">
+                    Eng. Rajesh Malhotra
+                  </h2>
+                  <span class="badge badge-completed" id="profileBadgeAccountType">Administrator</span>
+                </div>
+                <div id="profileRoleDisplay" style="font-size: 0.9rem; color: var(--accent-blue); font-weight: 600;">
+                  Chief Infrastructure Engineer
+                </div>
+                <div id="profileDeptDisplay" style="font-size: 0.8rem; color: var(--text-muted); margin-top: 4px;">
+                  Public Works & Metropolitan Road Development
+                </div>
+              </div>
+            </div>
+
+            <div>
+              <span class="hero-badge" style="background: rgba(16, 185, 129, 0.15); border-color: rgba(16, 185, 129, 0.3); color: var(--emerald-green-dark);">
+                <i class="fa-solid fa-certificate"></i> Verified Municipal ID #PWD-8842
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Edit Profile Form Card -->
+        <div class="rw-card" style="margin-bottom: 2rem;">
+          <div class="card-header" style="background: #f8fafc;">
+            <div class="card-title">
+              <i class="fa-solid fa-user-pen" style="color: var(--accent-blue);"></i> Edit Profile Details
+            </div>
+            <span class="badge badge-normal"><i class="fa-solid fa-shield-halved"></i> Role-Based Access Control</span>
+          </div>
+
+          <div class="card-body">
+            <form id="profileEditForm">
+              <div class="form-row-2">
+                <div class="form-group">
+                  <label class="form-label required" for="inputProfileName">Full Name</label>
+                  <input type="text" id="inputProfileName" class="form-control" required>
+                </div>
+
+                <div class="form-group">
+                  <label class="form-label required" for="inputProfileEmail">Official Email</label>
+                  <input type="email" id="inputProfileEmail" class="form-control" required>
+                </div>
+              </div>
+
+              <div class="form-row-2">
+                <div class="form-group">
+                  <label class="form-label required" for="inputProfilePhone">Contact Phone</label>
+                  <input type="tel" id="inputProfilePhone" class="form-control" required>
+                </div>
+
+                <div class="form-group">
+                  <label class="form-label required" for="inputProfileRole">Official Designation / Title</label>
+                  <input type="text" id="inputProfileRole" class="form-control" required>
+                </div>
+              </div>
+
+              <div class="form-row-2">
+                <div class="form-group">
+                  <label class="form-label required" for="inputProfileDept">Municipal Department</label>
+                  <input type="text" id="inputProfileDept" class="form-control" required>
+                </div>
+
+                <div class="form-group">
+                  <label class="form-label required" for="inputProfileZone">Assigned Territorial Zone</label>
+                  <input type="text" id="inputProfileZone" class="form-control" required>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label class="form-label" for="inputProfileAccountType">Account Permission Type</label>
+                <select id="inputProfileAccountType" class="form-select">
+                  <option value="Administrator">Administrator (Full Approval & Dispatch Rights)</option>
+                  <option value="Senior Municipal Engineer">Senior Municipal Engineer (Verification Rights)</option>
+                  <option value="Field Dispatch Supervisor">Field Dispatch Supervisor (Worker Assignment)</option>
+                </select>
+              </div>
+
+              <div style="display: flex; justify-content: flex-end; gap: 0.75rem; border-top: 1px solid #f1f5f9; padding-top: 1.25rem;">
+                <button type="submit" class="btn btn-primary">
+                  <i class="fa-solid fa-floppy-disk"></i> Save Profile Changes
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+
+        <!-- Demonstration Database Management Card -->
+        <div class="rw-card" style="border: 1px solid #fecdd3; background: #fff1f2;">
+          <div class="card-body" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; padding: 1.5rem;">
+            <div>
+              <h4 style="font-size: 1rem; color: #991b1b; font-weight: 700; display: flex; align-items: center; gap: 0.5rem;">
+                <i class="fa-solid fa-triangle-exclamation"></i> Reset Demonstration LocalStorage Database
+              </h4>
+              <p style="font-size: 0.8rem; color: #b91c1c; margin-top: 4px; max-width: 580px;">
+                Reset all complaints, maintenance tasks, sensor logs, and worker assignments back to the initial pre-seeded municipal state for demonstration.
+              </p>
+            </div>
+            <div>
+              <button class="btn btn-danger btn-sm" onclick="resetDemoData()">
+                <i class="fa-solid fa-arrows-rotate"></i> Reset All Demo Data
+              </button>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </main>
+  </div>
+
+  <!-- Scripts -->
+  <script src="js/storage.js"></script>
+  <script src="js/main.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      loadProfileData();
+
+      // Setup form submission
+      const form = document.getElementById('profileEditForm');
+      if (form) {
+        form.addEventListener('submit', (e) => {
+          e.preventDefault();
+          saveProfileData();
+        });
+      }
+
+      // Setup avatar upload
+      const avatarInput = document.getElementById('avatarFileInput');
+      if (avatarInput) {
+        avatarInput.addEventListener('change', async (e) => {
+          const file = e.target.files[0];
+          if (file) {
+            try {
+              const compressed = await window.storage.compressImage(file, 200, 200, 0.8);
+              const profile = window.storage.getProfile();
+              profile.avatar = compressed;
+              window.storage.saveProfile(profile);
+              loadProfileData();
+              showToast("Avatar Updated", "New profile picture saved successfully.", "success");
+            } catch (err) {
+              console.error(err);
+              showToast("Error", "Failed to update profile picture.", "error");
+            }
+          }
+        });
+      }
+    });
+
+    function loadProfileData() {
+      if (!window.storage) return;
+      const profile = window.storage.getProfile();
+
+      // Display fields
+      document.getElementById('profileNameDisplay').textContent = profile.name;
+      document.getElementById('profileRoleDisplay').textContent = profile.role;
+      document.getElementById('profileDeptDisplay').textContent = profile.department;
+      document.getElementById('profileBadgeAccountType').textContent = profile.accountType || 'Administrator';
+      if (profile.avatar) {
+        document.getElementById('profileAvatarDisplay').src = profile.avatar;
+        const sideAvatar = document.getElementById('sidebarAvatar');
+        if (sideAvatar) sideAvatar.src = profile.avatar;
+      }
+
+      const sideUser = document.getElementById('sidebarUserName');
+      if (sideUser) sideUser.textContent = profile.name;
+
+      // Form inputs
+      document.getElementById('inputProfileName').value = profile.name || '';
+      document.getElementById('inputProfileEmail').value = profile.email || '';
+      document.getElementById('inputProfilePhone').value = profile.phone || '';
+      document.getElementById('inputProfileRole').value = profile.role || '';
+      document.getElementById('inputProfileDept').value = profile.department || '';
+      document.getElementById('inputProfileZone').value = profile.zone || '';
+      document.getElementById('inputProfileAccountType').value = profile.accountType || 'Administrator';
+    }
+
+    function saveProfileData() {
+      if (!window.storage) return;
+
+      const current = window.storage.getProfile();
+      const updated = {
+        ...current,
+        name: document.getElementById('inputProfileName').value.trim(),
+        email: document.getElementById('inputProfileEmail').value.trim(),
+        phone: document.getElementById('inputProfilePhone').value.trim(),
+        role: document.getElementById('inputProfileRole').value.trim(),
+        department: document.getElementById('inputProfileDept').value.trim(),
+        zone: document.getElementById('inputProfileZone').value.trim(),
+        accountType: document.getElementById('inputProfileAccountType').value
+      };
+
+      window.storage.saveProfile(updated);
+      loadProfileData();
+      showToast("Profile Saved", "Your officer profile details have been updated.", "success");
+    }
+
+    function resetDemoData() {
+      if (confirm("Are you sure you want to reset all data back to the default demonstration seed? Any custom reports will be reset.")) {
+        window.storage.resetToDefault();
+        showToast("Database Reset", "Default municipal demonstration data restored.", "info");
+        setTimeout(() => {
+          window.location.reload();
+        }, 800);
+      }
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ROADWATCH - Report Road Damage</title>
+  
+  <!-- FontAwesome & Fonts -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/dashboard.css">
+  <link rel="stylesheet" href="css/forms.css">
+  <link rel="stylesheet" href="css/responsive.css">
+</head>
+<body>
+
+  <div class="app-container">
+    <!-- Sidebar Navigation -->
+    <aside class="app-sidebar"></aside>
+
+    <!-- Main Content Shell -->
+    <main class="app-main">
+      <!-- Topbar Header -->
+      <header class="app-topbar">
+        <div class="topbar-left">
+          <button class="menu-toggle-btn" title="Toggle Navigation Menu">
+            <i class="fa-solid fa-bars"></i>
+          </button>
+          <div class="page-title-group">
+            <h1>Citizen Road Damage Reporting</h1>
+            <div class="page-breadcrumb">
+              <a href="dashboard.html">Dashboard</a>
+              <i class="fa-solid fa-chevron-right" style="font-size:0.65rem;"></i>
+              <span>File Damage Complaint</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="topbar-right">
+          <div class="live-clock-badge">
+            <div class="live-pulse"></div>
+            <span id="liveClockText">Live Telemetry</span>
+          </div>
+          <a href="notifications.html" class="topbar-action-btn" title="Notifications">
+            <i class="fa-solid fa-bell"></i>
+            <span class="notif-badge-bubble" id="topbarNotifBadge" style="display:none;">0</span>
+          </a>
+        </div>
+      </header>
+
+      <!-- Form Content -->
+      <div class="page-content" style="max-width: 980px; margin: 0 auto;">
+        
+        <div class="rw-card">
+          <div class="card-header" style="background:#f8fafc;">
+            <div>
+              <div class="card-title">
+                <i class="fa-solid fa-triangle-exclamation" style="color:var(--warning-orange);"></i>
+                Public Road Damage Intake Form
+              </div>
+              <p style="font-size:0.825rem; color:var(--text-muted); margin-top:2px;">
+                Submit accurate information and photographic evidence to trigger immediate municipal inspection.
+              </p>
+            </div>
+            <span class="badge badge-normal"><i class="fa-solid fa-shield-halved"></i> Verified Submission</span>
+          </div>
+
+          <div class="card-body">
+            <form id="damageReportForm">
+              
+              <!-- 1. Road Name & Locality -->
+              <div class="form-row-2">
+                <div class="form-group">
+                  <label class="form-label required" for="roadName">Road / Highway / Street Name</label>
+                  <input type="text" id="roadName" class="form-control" placeholder="e.g. Outer Ring Road, Near Flyover Span 3" required>
+                  <div class="form-help-text">Specify the exact road or prominent landmark.</div>
+                </div>
+
+                <div class="form-group">
+                  <label class="form-label required" for="area">Area / Locality / Ward</label>
+                  <input type="text" id="area" class="form-control" placeholder="e.g. Indiranagar, East Zone" required>
+                  <div class="form-help-text">Municipal zone or neighbourhood division.</div>
+                </div>
+              </div>
+
+              <!-- 2. Damage Category Selection (Visual Radio Picker) -->
+              <div class="form-group">
+                <label class="form-label required">Road Damage Category</label>
+                <div class="category-picker-grid">
+                  <label class="category-option-card">
+                    <input type="radio" name="damageType" value="Potholes" checked>
+                    <div class="category-card-inner">
+                      <i class="fa-solid fa-circle-dot"></i>
+                      <span class="category-label-text">Potholes</span>
+                    </div>
+                  </label>
+                  
+                  <label class="category-option-card">
+                    <input type="radio" name="damageType" value="Road cracks">
+                    <div class="category-card-inner">
+                      <i class="fa-solid fa-burst"></i>
+                      <span class="category-label-text">Road Cracks</span>
+                    </div>
+                  </label>
+
+                  <label class="category-option-card">
+                    <input type="radio" name="damageType" value="Waterlogging">
+                    <div class="category-card-inner">
+                      <i class="fa-solid fa-water"></i>
+                      <span class="category-label-text">Waterlogging</span>
+                    </div>
+                  </label>
+
+                  <label class="category-option-card">
+                    <input type="radio" name="damageType" value="Broken road surfaces">
+                    <div class="category-card-inner">
+                      <i class="fa-solid fa-road"></i>
+                      <span class="category-label-text">Broken Surface</span>
+                    </div>
+                  </label>
+
+                  <label class="category-option-card">
+                    <input type="radio" name="damageType" value="Uneven roads">
+                    <div class="category-card-inner">
+                      <i class="fa-solid fa-wave-square"></i>
+                      <span class="category-label-text">Uneven Roads</span>
+                    </div>
+                  </label>
+
+                  <label class="category-option-card">
+                    <input type="radio" name="damageType" value="Damaged footpaths">
+                    <div class="category-card-inner">
+                      <i class="fa-solid fa-person-walking"></i>
+                      <span class="category-label-text">Damaged Footpaths</span>
+                    </div>
+                  </label>
+
+                  <label class="category-option-card">
+                    <input type="radio" name="damageType" value="Other">
+                    <div class="category-card-inner">
+                      <i class="fa-solid fa-ellipsis"></i>
+                      <span class="category-label-text">Other Issue</span>
+                    </div>
+                  </label>
+                </div>
+              </div>
+
+              <!-- 3. Severity Selection (Chips) -->
+              <div class="form-group">
+                <label class="form-label required">Assessed Severity Rating</label>
+                <div class="severity-picker-row">
+                  <label class="severity-chip low">
+                    <input type="radio" name="severity" value="Low">
+                    <div class="severity-chip-inner">
+                      <i class="fa-solid fa-shield-halved"></i>
+                      <span>Low (Minor Defect)</span>
+                    </div>
+                  </label>
+
+                  <label class="severity-chip medium">
+                    <input type="radio" name="severity" value="Medium" checked>
+                    <div class="severity-chip-inner">
+                      <i class="fa-solid fa-triangle-exclamation"></i>
+                      <span>Medium (Affects Traffic)</span>
+                    </div>
+                  </label>
+
+                  <label class="severity-chip high">
+                    <input type="radio" name="severity" value="High">
+                    <div class="severity-chip-inner">
+                      <i class="fa-solid fa-fire"></i>
+                      <span>High (Severe Accident Hazard)</span>
+                    </div>
+                  </label>
+                </div>
+              </div>
+
+              <!-- 4. GPS Geolocation Card with Auto-Detect -->
+              <div class="gps-detector-box">
+                <div class="gps-detector-header">
+                  <div class="gps-title-text">
+                    <i class="fa-solid fa-location-crosshairs" style="color:var(--accent-blue);"></i>
+                    <span>GPS Geospatial Coordinates</span>
+                  </div>
+                  <button type="button" class="btn btn-primary btn-sm" id="detectGpsBtn">
+                    <i class="fa-solid fa-crosshairs"></i> Detect My Location
+                  </button>
+                </div>
+
+                <div class="gps-coords-row">
+                  <div>
+                    <label class="form-label required" for="latitude">Latitude</label>
+                    <input type="number" step="any" id="latitude" class="form-control" placeholder="e.g. 12.935240" required>
+                  </div>
+                  <div>
+                    <label class="form-label required" for="longitude">Longitude</label>
+                    <input type="number" step="any" id="longitude" class="form-control" placeholder="e.g. 77.624510" required>
+                  </div>
+                </div>
+
+                <div class="gps-status-indicator mt-2" id="gpsStatusText">
+                  <i class="fa-solid fa-circle-info"></i> Click "Detect My Location" or type coordinates manually if GPS is disabled.
+                </div>
+              </div>
+
+              <!-- 5. Multiple Photograph Uploads Dropzone -->
+              <div class="form-group">
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.4rem;">
+                  <label class="form-label required" style="margin-bottom:0;">Photographic Evidence</label>
+                  <span class="badge badge-normal" id="uploadCountBadge" style="display:none;">0 photos</span>
+                </div>
+
+                <div class="photo-dropzone" id="photoDropzone">
+                  <input type="file" id="photoInput" accept="image/*" multiple>
+                  <div class="dropzone-icon"><i class="fa-solid fa-cloud-arrow-up"></i></div>
+                  <div class="dropzone-heading">Click or Drag & Drop Road Photos Here</div>
+                  <div class="dropzone-subtext">Supports JPG, PNG, WEBP. Multiple uploads supported. Automatic client compression.</div>
+                </div>
+
+                <!-- Preview Thumbnail Grid -->
+                <div class="image-preview-grid" id="imagePreviewGrid"></div>
+              </div>
+
+              <!-- 6. Detailed Damage Description -->
+              <div class="form-group">
+                <label class="form-label required" for="description">Detailed Description of Damage</label>
+                <textarea id="description" class="form-control" placeholder="Describe the size, depth, extent of cavity, risk to motorists, or any flooding obstruction..." required></textarea>
+              </div>
+
+              <!-- 7. Date, Time & Reporter Information -->
+              <div class="form-row-3">
+                <div class="form-group">
+                  <label class="form-label required" for="reportDateTime">Incident Date & Time</label>
+                  <input type="datetime-local" id="reportDateTime" class="form-control" required>
+                </div>
+
+                <div class="form-group">
+                  <label class="form-label required" for="reporterName">Reporter Full Name</label>
+                  <input type="text" id="reporterName" class="form-control" placeholder="Your name" required>
+                </div>
+
+                <div class="form-group">
+                  <label class="form-label" for="reporterPhone">Contact Phone Number</label>
+                  <input type="tel" id="reporterPhone" class="form-control" placeholder="+91 98XXX XXXXX">
+                </div>
+              </div>
+
+              <!-- Submit Buttons -->
+              <div style="display:flex; justify-content:flex-end; gap:1rem; margin-top:2rem; border-top:1px solid var(--card-border); padding-top:1.5rem;">
+                <button type="reset" class="btn btn-outline">
+                  <i class="fa-solid fa-arrow-rotate-left"></i> Reset Form
+                </button>
+                <button type="submit" class="btn btn-warning" style="font-size:1rem; padding:0.75rem 2rem;">
+                  <i class="fa-solid fa-paper-plane"></i> Submit Road Damage Report
+                </button>
+              </div>
+
+            </form>
+          </div>
+        </div>
+
+      </div>
+    </main>
+  </div>
+
+  <!-- Success Confirmation Modal -->
+  <div class="modal-overlay" id="successModal">
+    <div class="modal-card">
+      <div class="modal-header" style="background:#ecfdf5; border-bottom:1px solid #a7f3d0;">
+        <div class="modal-title" style="color:#065f46; display:flex; align-items:center; gap:0.5rem;">
+          <i class="fa-solid fa-circle-check"></i> Report Registered Successfully
+        </div>
+        <button class="btn-close-modal" onclick="closeSuccessModal()">&times;</button>
+      </div>
+      <div class="modal-body" style="text-align:center; padding:2rem 1.5rem;">
+        <div style="width:70px; height:70px; border-radius:50%; background:#d1fae5; color:var(--emerald-green-dark); font-size:2rem; display:flex; align-items:center; justify-content:center; margin:0 auto 1.25rem;">
+          <i class="fa-solid fa-check"></i>
+        </div>
+        <h3 style="font-size:1.35rem; color:var(--primary-navy); margin-bottom:0.5rem;">Complaint Successfully Lodged</h3>
+        <p style="color:var(--text-muted); font-size:0.9rem; margin-bottom:1.5rem;">
+          Your report has been securely saved to the municipal registry. An inspection task has been queued for engineering triage.
+        </p>
+
+        <!-- Complaint ID Card -->
+        <div style="background:#f8fafc; border:2px dashed #cbd5e1; border-radius:8px; padding:1rem; margin-bottom:1.5rem;">
+          <div style="font-size:0.75rem; color:var(--text-muted); text-transform:uppercase; letter-spacing:0.05em; font-weight:700;">Unique Tracking ID</div>
+          <div style="font-size:1.6rem; font-weight:800; color:var(--accent-blue); margin:0.25rem 0;" id="successComplaintId">
+            RW-2026-XXXX
+          </div>
+          <button type="button" class="btn btn-outline btn-sm" onclick="copyComplaintId()">
+            <i class="fa-solid fa-copy"></i> Copy Complaint ID
+          </button>
+        </div>
+
+        <div style="display:flex; justify-content:center; gap:0.75rem; flex-wrap:wrap;">
+          <a href="#" class="btn btn-primary" id="modalTrackBtn">
+            <i class="fa-solid fa-magnifying-glass-location"></i> Track Status Now
+          </a>
+          <a href="#" class="btn btn-secondary" id="modalMapBtn">
+            <i class="fa-solid fa-map-location-dot"></i> View on GIS Map
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="js/storage.js"></script>
+  <script src="js/main.js"></script>
+  <script src="js/report.js"></script>
+</body>
+</html>

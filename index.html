@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ROADWATCH - Road Condition Monitoring & Infrastructure Platform</title>
+  
+  <!-- FontAwesome & Fonts -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/dashboard.css">
+  <link rel="stylesheet" href="css/forms.css">
+  <link rel="stylesheet" href="css/responsive.css">
+
+  <style>
+    /* Landing Page Specific Enhancements */
+    .landing-header {
+      background-color: rgba(15, 23, 42, 0.95);
+      backdrop-filter: blur(8px);
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 75px;
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 4rem;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    .landing-nav-links {
+      display: flex;
+      gap: 2rem;
+      align-items: center;
+    }
+    .landing-nav-links a {
+      color: #94a3b8;
+      font-size: 0.925rem;
+      font-weight: 500;
+      transition: var(--transition);
+    }
+    .landing-nav-links a:hover {
+      color: #ffffff;
+    }
+    .hero-section {
+      min-height: 90vh;
+      background: radial-gradient(circle at 75% 30%, rgba(37, 99, 235, 0.2), transparent 45%),
+                  radial-gradient(circle at 20% 80%, rgba(16, 185, 129, 0.15), transparent 40%),
+                  linear-gradient(180deg, #0f172a 0%, #1e293b 100%);
+      padding: 130px 4rem 60px;
+      display: flex;
+      align-items: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero-content {
+      max-width: 650px;
+      position: relative;
+      z-index: 2;
+    }
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.4rem 1rem;
+      border-radius: var(--radius-full);
+      background: rgba(37, 99, 235, 0.18);
+      border: 1px solid rgba(37, 99, 235, 0.35);
+      color: #60a5fa;
+      font-size: 0.8rem;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      margin-bottom: 1.5rem;
+    }
+    .hero-heading {
+      font-size: 3.25rem;
+      font-weight: 900;
+      line-height: 1.15;
+      color: #ffffff;
+      margin-bottom: 1.25rem;
+    }
+    .hero-heading span {
+      background: linear-gradient(135deg, #60a5fa, #38bdf8);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .hero-tagline {
+      font-size: 1.35rem;
+      font-weight: 600;
+      color: var(--warning-orange);
+      margin-bottom: 1.25rem;
+    }
+    .hero-desc {
+      font-size: 1.05rem;
+      color: #cbd5e1;
+      line-height: 1.6;
+      margin-bottom: 2rem;
+    }
+    .hero-actions {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+    .hero-stats-banner {
+      background-color: var(--primary-navy);
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      padding: 2rem 4rem;
+    }
+    .hero-stats-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 2rem;
+      text-align: center;
+    }
+    .hero-stat-num {
+      font-size: 2.25rem;
+      font-weight: 900;
+      color: #ffffff;
+    }
+    .hero-stat-num span {
+      color: var(--accent-blue);
+    }
+    .hero-stat-label {
+      font-size: 0.85rem;
+      color: #94a3b8;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-top: 0.25rem;
+    }
+    .landing-section {
+      padding: 5rem 4rem;
+    }
+    .section-title-wrap {
+      text-align: center;
+      max-width: 700px;
+      margin: 0 auto 3.5rem;
+    }
+    .section-subtitle {
+      color: var(--accent-blue);
+      font-size: 0.85rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 0.5rem;
+    }
+    .section-title {
+      font-size: 2.25rem;
+      font-weight: 800;
+      color: var(--primary-navy);
+    }
+    .workflow-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1.5rem;
+    }
+    .workflow-card {
+      background: #ffffff;
+      padding: 2rem 1.5rem;
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--card-border);
+      box-shadow: var(--shadow-sm);
+      position: relative;
+      transition: var(--transition);
+    }
+    .workflow-card:hover {
+      transform: translateY(-5px);
+      box-shadow: var(--shadow-lg);
+    }
+    .workflow-step-badge {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: var(--accent-blue-light);
+      color: var(--accent-blue);
+      font-size: 1.25rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      margin-bottom: 1.25rem;
+    }
+    .category-showcase-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+    }
+    .category-showcase-card {
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      border: 1px solid var(--card-border);
+      background: #ffffff;
+      box-shadow: var(--shadow-sm);
+      transition: var(--transition);
+    }
+    .category-showcase-card:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-md);
+    }
+    .category-img-box {
+      height: 180px;
+      overflow: hidden;
+      background: #1e293b;
+    }
+    .category-img-box img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.4s ease;
+    }
+    .category-showcase-card:hover .category-img-box img {
+      transform: scale(1.05);
+    }
+    .landing-footer {
+      background-color: var(--primary-navy);
+      color: #94a3b8;
+      padding: 4rem 4rem 2rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    @media (max-width: 991px) {
+      .landing-header { padding: 0 1.5rem; }
+      .landing-nav-links { display: none; }
+      .hero-section { padding: 110px 1.5rem 50px; }
+      .hero-heading { font-size: 2.25rem; }
+      .hero-stats-grid { grid-template-columns: repeat(2, 1fr); }
+      .workflow-grid { grid-template-columns: repeat(2, 1fr); }
+      .category-showcase-grid { grid-template-columns: 1fr; }
+      .landing-section { padding: 3.5rem 1.5rem; }
+      .landing-footer { padding: 3rem 1.5rem 1.5rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Navigation Bar -->
+  <header class="landing-header">
+    <a href="index.html" class="brand-logo">
+      <div class="brand-icon"><i class="fa-solid fa-shield-halved"></i></div>
+      <div class="brand-name">ROAD<span>WATCH</span></div>
+    </a>
+    
+    <nav class="landing-nav-links">
+      <a href="#features">Platform Features</a>
+      <a href="#howItWorks">How It Works</a>
+      <a href="#categories">Damage Categories</a>
+      <a href="tracking.html">Track Complaint</a>
+      <a href="map.html">Live Map</a>
+    </nav>
+
+    <div style="display:flex; gap:0.85rem; align-items:center;">
+      <a href="report.html" class="btn btn-warning btn-sm">
+        <i class="fa-solid fa-triangle-exclamation"></i> Report Road Damage
+      </a>
+      <a href="dashboard.html" class="btn btn-primary btn-sm">
+        <i class="fa-solid fa-chart-line"></i> Operations Dashboard
+      </a>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="hero-section">
+    <div class="hero-content">
+      <div class="hero-badge">
+        <i class="fa-solid fa-satellite-dish"></i> Smart City Infrastructure Platform
+      </div>
+      <h1 class="hero-heading">
+        Road Condition <span>Monitoring System</span>
+      </h1>
+      <div class="hero-tagline">
+        "Monitor Roads. Report Damage. Improve Infrastructure."
+      </div>
+      <p class="hero-desc">
+        Empowering citizens to report road damage with automated GPS geolocation and photograph uploads, while enabling municipal authorities to schedule maintenance, assign field crews, and verify repair quality.
+      </p>
+      <div class="hero-actions">
+        <a href="report.html" class="btn btn-warning" style="font-size:1rem; padding:0.85rem 1.75rem;">
+          <i class="fa-solid fa-triangle-exclamation"></i> Report Road Damage
+        </a>
+        <a href="tracking.html" class="btn btn-outline" style="color:#ffffff; border-color:rgba(255,255,255,0.25); font-size:1rem; padding:0.85rem 1.75rem;">
+          <i class="fa-solid fa-magnifying-glass"></i> Track Complaint
+        </a>
+        <a href="dashboard.html" class="btn btn-primary" style="font-size:1rem; padding:0.85rem 1.75rem;">
+          <i class="fa-solid fa-gauge-high"></i> Officer Dashboard
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Dynamic Live Stats Banner -->
+  <div class="hero-stats-banner">
+    <div class="hero-stats-grid">
+      <div>
+        <div class="hero-stat-num" id="heroTotalReports">8<span>+</span></div>
+        <div class="hero-stat-label">Total Reports Logged</div>
+      </div>
+      <div>
+        <div class="hero-stat-num" style="color:var(--emerald-green);" id="heroResolvedCount">92<span>%</span></div>
+        <div class="hero-stat-label">Resolution Rate</div>
+      </div>
+      <div>
+        <div class="hero-stat-num" id="heroActiveWorkers">5<span> Crew</span></div>
+        <div class="hero-stat-label">Field Specialists</div>
+      </div>
+      <div>
+        <div class="hero-stat-num" style="color:var(--warning-orange);" id="heroUnderInspection">4<span> Nodes</span></div>
+        <div class="hero-stat-label">IoT Sensor Nodes</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- How It Works Section -->
+  <section class="landing-section" id="howItWorks">
+    <div class="section-title-wrap">
+      <div class="section-subtitle">Seamless 4-Stage Process</div>
+      <h2 class="section-title">How ROADWATCH Works</h2>
+      <p class="text-muted mt-2">A transparent, end-to-end workflow bridging citizens and highway engineering crews.</p>
+    </div>
+
+    <div class="workflow-grid">
+      <div class="workflow-card">
+        <div class="workflow-step-badge">1</div>
+        <h3 style="font-size:1.15rem; color:var(--primary-navy); margin-bottom:0.5rem;">Report Damage</h3>
+        <p style="font-size:0.875rem; color:var(--text-muted); line-height:1.5;">
+          Citizens upload photographs of damaged road surfaces with automatic browser GPS location detection.
+        </p>
+      </div>
+      <div class="workflow-card">
+        <div class="workflow-step-badge">2</div>
+        <h3 style="font-size:1.15rem; color:var(--primary-navy); margin-bottom:0.5rem;">Review & Triage</h3>
+        <p style="font-size:0.875rem; color:var(--text-muted); line-height:1.5;">
+          Municipal engineers review severity (High, Medium, Low), approve legitimate reports, and generate maintenance tasks.
+        </p>
+      </div>
+      <div class="workflow-card">
+        <div class="workflow-step-badge">3</div>
+        <h3 style="font-size:1.15rem; color:var(--primary-navy); margin-bottom:0.5rem;">Dispatch Crew</h3>
+        <p style="font-size:0.875rem; color:var(--text-muted); line-height:1.5;">
+          Repair tasks are prioritized, deadlines are set, and qualified asphalt and drainage workers are assigned to the field.
+        </p>
+      </div>
+      <div class="workflow-card">
+        <div class="workflow-step-badge">4</div>
+        <h3 style="font-size:1.15rem; color:var(--primary-navy); margin-bottom:0.5rem;">Verify & Complete</h3>
+        <p style="font-size:0.875rem; color:var(--text-muted); line-height:1.5;">
+          Field workers upload after-repair photographs. The chief engineer inspects side-by-side comparison before marking resolved.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Features Section -->
+  <section class="landing-section" id="features" style="background-color:#ffffff;">
+    <div class="section-title-wrap">
+      <div class="section-subtitle">Intelligent Road Management</div>
+      <h2 class="section-title">Advanced Platform Capabilities</h2>
+    </div>
+
+    <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(280px, 1fr)); gap:2rem;">
+      <div class="rw-card" style="padding:1.75rem;">
+        <div style="font-size:2rem; color:var(--accent-blue); margin-bottom:1rem;"><i class="fa-solid fa-map-location-dot"></i></div>
+        <h3 style="font-size:1.2rem; color:var(--primary-navy); margin-bottom:0.5rem;">GIS Interactive Mapping</h3>
+        <p style="font-size:0.875rem; color:var(--text-muted);">
+          Leaflet-powered spatial map with color-coded severity markers (Red, Orange, Green), radius search, and live GPS positioning.
+        </p>
+      </div>
+      <div class="rw-card" style="padding:1.75rem;">
+        <div style="font-size:2rem; color:var(--emerald-green); margin-bottom:1rem;"><i class="fa-solid fa-images"></i></div>
+        <h3 style="font-size:1.2rem; color:var(--primary-navy); margin-bottom:0.5rem;">Before & After Verification</h3>
+        <p style="font-size:0.875rem; color:var(--text-muted);">
+          High-definition side-by-side photographic quality assurance. No repair is marked complete without engineering sign-off.
+        </p>
+      </div>
+      <div class="rw-card" style="padding:1.75rem;">
+        <div style="font-size:2rem; color:var(--warning-orange); margin-bottom:1rem;"><i class="fa-solid fa-wave-square"></i></div>
+        <h3 style="font-size:1.2rem; color:var(--primary-navy); margin-bottom:0.5rem;">IoT Sensor Telemetry</h3>
+        <p style="font-size:0.875rem; color:var(--text-muted);">
+          Demonstration module showing continuous vibration amplitude and International Roughness Index (IRI) monitoring.
+        </p>
+      </div>
+      <div class="rw-card" style="padding:1.75rem;">
+        <div style="font-size:2rem; color:#8b5cf6; margin-bottom:1rem;"><i class="fa-solid fa-helicopter"></i></div>
+        <h3 style="font-size:1.2rem; color:var(--primary-navy); margin-bottom:0.5rem;">Drone Aerial Survey</h3>
+        <p style="font-size:0.875rem; color:var(--text-muted);">
+          Scheduled aerial corridor missions, photogrammetry inspection reports, and direct linkage to citizen damage complaints.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Road Damage Categories Showcase -->
+  <section class="landing-section" id="categories">
+    <div class="section-title-wrap">
+      <div class="section-subtitle">Classified Hazards</div>
+      <h2 class="section-title">Road Damage Categories</h2>
+      <p class="text-muted mt-2">Comprehensive classification system to dispatch appropriate equipment and materials.</p>
+    </div>
+
+    <div class="category-showcase-grid">
+      <div class="category-showcase-card">
+        <div class="category-img-box"><img src="assets/images/pothole.svg" alt="Potholes"></div>
+        <div style="padding:1.25rem;">
+          <h4 style="font-size:1.1rem; color:var(--primary-navy);">Potholes</h4>
+          <p style="font-size:0.85rem; color:var(--text-muted); margin-top:0.35rem;">Cavities formed by moisture penetration and traffic stress. Requires cold/hot asphalt compaction.</p>
+        </div>
+      </div>
+      <div class="category-showcase-card">
+        <div class="category-img-box"><img src="assets/images/cracks.svg" alt="Road Cracks"></div>
+        <div style="padding:1.25rem;">
+          <h4 style="font-size:1.1rem; color:var(--primary-navy);">Road Cracks & Fissures</h4>
+          <p style="font-size:0.85rem; color:var(--text-muted); margin-top:0.35rem;">Longitudinal and alligator cracks treated with hot-pour bituminous sealant to prevent structural sub-base collapse.</p>
+        </div>
+      </div>
+      <div class="category-showcase-card">
+        <div class="category-img-box"><img src="assets/images/waterlogging.svg" alt="Waterlogging"></div>
+        <div style="padding:1.25rem;">
+          <h4 style="font-size:1.1rem; color:var(--primary-navy);">Storm Waterlogging</h4>
+          <p style="font-size:0.85rem; color:var(--text-muted); margin-top:0.35rem;">Inundation caused by blocked storm drain culverts. Managed by municipal drainage pumps and silt desilting.</p>
+        </div>
+      </div>
+      <div class="category-showcase-card">
+        <div class="category-img-box"><img src="assets/images/broken_surface.svg" alt="Broken Road Surfaces"></div>
+        <div style="padding:1.25rem;">
+          <h4 style="font-size:1.1rem; color:var(--primary-navy);">Broken Road Surfaces</h4>
+          <p style="font-size:0.85rem; color:var(--text-muted); margin-top:0.35rem;">Eroded wearing courses revealing aggregate stones, causing extreme tire wear and vehicle deceleration.</p>
+        </div>
+      </div>
+      <div class="category-showcase-card">
+        <div class="category-img-box"><img src="assets/images/broken_surface.svg" alt="Uneven Roads"></div>
+        <div style="padding:1.25rem;">
+          <h4 style="font-size:1.1rem; color:var(--primary-navy);">Uneven & Rutted Roads</h4>
+          <p style="font-size:0.85rem; color:var(--text-muted); margin-top:0.35rem;">Corrugations and ruts created by heavy freight vehicles, requiring road milling and asphalt re-profiling.</p>
+        </div>
+      </div>
+      <div class="category-showcase-card">
+        <div class="category-img-box"><img src="assets/images/repaired_road.svg" alt="Repaired Surfaces"></div>
+        <div style="padding:1.25rem;">
+          <h4 style="font-size:1.1rem; color:var(--emerald-green-dark);">Damaged Footpaths & Curbs</h4>
+          <p style="font-size:0.85rem; color:var(--text-muted); margin-top:0.35rem;">Pedestrian safety hazards including dislodged interlocking pavers, broken curbs, and exposed utility trenches.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="landing-footer">
+    <div style="display:flex; justify-content:space-between; flex-wrap:wrap; gap:2rem; margin-bottom:3rem;">
+      <div style="max-width:350px;">
+        <div class="brand-logo" style="margin-bottom:1rem;">
+          <div class="brand-icon"><i class="fa-solid fa-shield-halved"></i></div>
+          <div class="brand-name">ROAD<span>WATCH</span></div>
+        </div>
+        <p style="font-size:0.875rem; line-height:1.6;">
+          ROADWATCH is a dedicated municipal road condition monitoring platform developed to maintain urban mobility, enhance road safety, and streamline civic complaint resolutions.
+        </p>
+      </div>
+
+      <div>
+        <h4 style="color:#ffffff; font-size:1rem; margin-bottom:1rem;">Quick Navigation</h4>
+        <div style="display:flex; flex-direction:column; gap:0.5rem; font-size:0.875rem;">
+          <a href="dashboard.html" style="color:#94a3b8;">Operations Dashboard</a>
+          <a href="report.html" style="color:#94a3b8;">Report Road Hazard</a>
+          <a href="tracking.html" style="color:#94a3b8;">Complaint Tracking</a>
+          <a href="map.html" style="color:#94a3b8;">Interactive GIS Map</a>
+          <a href="maintenance.html" style="color:#94a3b8;">Maintenance Scheduler</a>
+        </div>
+      </div>
+
+      <div>
+        <h4 style="color:#ffffff; font-size:1rem; margin-bottom:1rem;">Advanced Modules</h4>
+        <div style="display:flex; flex-direction:column; gap:0.5rem; font-size:0.875rem;">
+          <a href="workers.html" style="color:#94a3b8;">Field Crew Management</a>
+          <a href="comparison.html" style="color:#94a3b8;">Before & After Verification</a>
+          <a href="sensors.html" style="color:#94a3b8;">IoT Sensor Monitoring</a>
+          <a href="drone.html" style="color:#94a3b8;">Drone Aerial Survey</a>
+          <a href="reports.html" style="color:#94a3b8;">Analytical Reports & CSV</a>
+        </div>
+      </div>
+
+      <div>
+        <h4 style="color:#ffffff; font-size:1rem; margin-bottom:1rem;">Emergency Hotline</h4>
+        <p style="font-size:0.85rem; margin-bottom:0.5rem;"><i class="fa-solid fa-phone"></i> PWD Helpline: <strong>1800-425-ROAD</strong></p>
+        <p style="font-size:0.85rem; margin-bottom:0.5rem;"><i class="fa-solid fa-envelope"></i> helpdesk@roadwatch.gov.in</p>
+        <p style="font-size:0.85rem;"><i class="fa-solid fa-building"></i> Metropolitan Public Works Authority</p>
+      </div>
+    </div>
+
+    <div style="text-align:center; border-top:1px solid rgba(255,255,255,0.08); padding-top:1.5rem; font-size:0.8rem;">
+      &copy; 2026 ROADWATCH - Intelligent Road Infrastructure Monitoring System. All rights reserved.
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="js/storage.js"></script>
+  <script>
+    // Update dynamic stats on landing page from LocalStorage
+    document.addEventListener('DOMContentLoaded', () => {
+      if (window.storage) {
+        const stats = window.storage.getStatistics();
+        const repEl = document.getElementById('heroTotalReports');
+        if (repEl) repEl.innerHTML = `${stats.totalComplaints}<span>+</span>`;
+      }
+    });
+  </script>
+</body>
+</html>
